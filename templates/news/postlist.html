@@ -1,0 +1,132 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+    {% if request.path == '/news/' %}
+        Новости
+    {% else %}
+        Статьи
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+<tr class="section-header">
+{% if request.path == '/news/' %}
+    <h1 class="section-title">Все новости</h1>
+    {% if postlist.count == 1 or postlist.count == 21 or postlist.count == 31 or postlist.count == 41 %}
+        <h3>На MainNews {{ postlist.count }} новость</h3>
+    {% elif postlist.count == 2 or postlist.count == 3 or postlist.count == 4 or postlist.count == 22 or postlist.count == 23 or postlist.count == 24 %}
+        <h3>На MainNews {{ postlist.count }} новости</h3>
+    {% else %}
+        <h3>На MainNews {{ postlist.count }} новостей</h3>
+    {% endif %}
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти новости в категории">
+    </form>
+    <form action="/subscribe/">
+        <input type="submit" value="Подписаться на новинки в категории">
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Заголовок</th>
+                <th scope="col">Содержание</th>
+                <th scope="col">Дата публикации</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Категория</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in filterset.qs %}
+                <tr class="table-success">
+                    <th scope="row"><a href="{{ request.path }}{{ post.id }}">{{ post.title_post|censor }}</a></th>
+                    <td class="card-title">{{ post.text_post|censor|truncatechars:20 }}</td>
+                    <td class="card-text">{{ post.time_create }}</td>
+                    <td class="card-text">{{ post.author.user.username }}</td>
+                    <td class="card-text">{% for category in post.category.all %} <form method="get"> <a href="/news/?category={{ category.id }}">{{category}}</a></form>   {% endfor %} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+    <h1 class="section-title">Все статьи</h1>
+    {% if postlist.count == 1 or postlist.count == 21 or postlist.count == 31 or postlist.count == 41 %}
+        <h3>На MainNews {{ postlist.count }} статья</h3>
+    {% elif postlist.count == 2 or postlist.count == 3 or postlist.count == 4 or postlist.count == 22 or postlist.count == 23 or postlist.count == 24 %}
+        <h3>На MainNews {{ postlist.count }} статьи</h3>
+    {% else %}
+        <h3>На MainNews {{ postlist.count }} статей</h3>
+    {% endif %}
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти статьи в категории">
+    </form>
+    <form action="/subscribe/">
+        <input type="submit" value="Подписаться на новинки в категории">
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Заголовок</th>
+                <th scope="col">Содержание</th>
+                <th scope="col">Дата публикации</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Категория</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in filterset.qs %}
+                <tr class="table-info">
+                    <th scope="row"><a href="{{ request.path }}{{ post.id }}">{{ post.title_post|censor }}</a></th>
+                    <td class="card-title">{{ post.text_post|censor|truncatechars:20 }}</td>
+                    <td class="card-text">{{ post.time_create }}</td>
+                    <td class="card-text">{{ post.author.user.username }}</td>
+                    <td class="card-text">{% for category in post.category.all %} <form method="get"> <a href="/articles/?category={{ category.id }}">{{category}}</a></form> {% endfor %} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="bs-component">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">1</a>
+                        </li>
+                        {% if page_obj.previous_page_number != 1 %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">&laquo;</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                        </li>
+                        {% if paginator.num_pages != page_obj.next_page_number %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

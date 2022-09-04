@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Здравствуйте, {{ user.username }}!</h2>
+<p>В вашей люимой категории опубликованы новинки за прошедшую неделю:</p>
+
+<table>
+  <tr>
+    {% for post in posts %}
+    <td>
+      <a href="http://127.0.0.1:8000/articles/{{ post.id }}">{{ post.title }}</a>
+    </td>
+    {% endfor %}
+  </tr>
+</table>
+</body>
+</html>

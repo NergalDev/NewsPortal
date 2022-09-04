@@ -1,0 +1,36 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}Поиск{% endblock title %}
+
+{% block content %}
+<div class="container"></div>
+<form action="" method="get">
+  <fieldset>
+    <legend>Поиск</legend>
+<div class="form-group">
+     <label class="col-form-label col-form-label-lg mt-4" for="inputLarge">Поиск по названию:</label>
+  <input class="form-control form-control-lg" type="text" placeholder="Поиск покажет точное совпадение с учетом регистра" id="inputLarge" name="title_post__icontains">
+</div>
+
+<div class="form-group">
+     <label class="col-form-label col-form-label-lg mt-4" for="inputLarge">Поиск по тексту:</label>
+  <input class="form-control form-control-lg" type="text" placeholder="Поиск покажет точное совпадение с учетом регистра" id="inputLarge" name="text_post__icontains">
+</div>
+<div class="form-group">
+     <label class="col-form-label col-form-label-lg mt-4" for="inputLarge">Поиск по дате:</label>
+  <input class="form-control form-control-lg" type="date" placeholder="Поиск покажет новости, опубликованные после указанной даты" id="inputLarge" name="time_create__gte">
+</div>
+      <br>
+    <button type="submit" class="btn btn-primary">Найти</button>
+  </fieldset>
+</form>
+
+<h3>Результаты поиска:</h3>
+                    {% for post in filterset.qs %}
+                    <h3><a href="/news/{{post.id}}">{{ post.title_post|censor }}</a></h3>
+                        {{ post.post|censor|truncatewords:20 }}
+                        {{ post.time_create|date:'d M Y' }}
+                    {% endfor %}
+</div>
+{% endblock content %}

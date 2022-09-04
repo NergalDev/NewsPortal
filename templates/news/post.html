@@ -1,0 +1,16 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}{{ post.title_post|censor }}{% endblock title %}
+
+{% block content %}
+Категория:
+{% for category in post.category.all %}
+<h3 class="text-success">{{ category }}</h3>
+{% endfor %}
+<h1>{{ post.title_post|censor }}</h1>
+<h3>
+  <small class="text-muted">{{ post.time_create }}</small>
+</h3>
+<p class="lead">{{ post.text_post|censor }}</p>
+{% endblock content %}

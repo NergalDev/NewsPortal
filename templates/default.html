@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="jpg" type="image" href="assets/favico.jpg" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Главная страница</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/news/">Все новости
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/articles/">Все статьи</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/news/create">Добавить новость</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/articles/create">Добавить статью</a>
+        </li>
+      </ul>
+      <form class="d-flex" action="" method="get">
+        <input class="form-control me-sm-2" type="text" placeholder="Поиск контента">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit" name="text_post__icontains">Поиск</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<br>
+<div class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/4ulffa6qoKA/1200x800')">
+            <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
+            <div style="height: 20rem"></div>
+</div>
+<div class="container">{% block content %}{% endblock content %}</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</body>
+</html>

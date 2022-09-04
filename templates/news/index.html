@@ -1,0 +1,27 @@
+{% extends 'default.html' %}
+
+{% block title %} MainNews {% endblock title %}
+
+{% block content %}
+<h2>Вы вошли на сайт как {{request.user.username}}</h2>
+
+{% if is_not_authors %}
+<button> <a href="accounts/upgrade/"> Стать автором </a> </button>
+{% endif %}
+
+<button> <a href="accounts/logout/">Выйти</a> </button>
+<br><br><br><br><br><br>
+<div align="center">
+    <h1>AstroScienceNews</h1><h3> - портал, посвященный астрономии, астрофизике и космосу в целом</h3>
+    <p>Регистрируйтесь, становитесь Авторами, добавляйте материал!</p>
+    <h2>Выберите что Вы хотите почитать:</h2>
+    <br><br><br>
+    <button type="button" class="btn btn-outline-success"><a href="/articles/">   Статьи   </a></button>
+    <button type="button" class="btn btn-success"><a href="/news/">   Новости   </a></button>
+    <br><br><br><br><br><br>
+    <h5>* Добавлять контент на AstroScienceNews могут только Авторы </h5>
+</div>
+
+
+
+{% endblock content %}

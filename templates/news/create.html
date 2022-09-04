@@ -1,0 +1,21 @@
+{% extends 'default.html' %}
+
+{% block title %} Добавление контента {% endblock title %}
+
+{% block content %}
+<div class="container" data-aos="fade-up" align="center">
+    <div class="section-header">
+        <h1 class="cta-text">Заполните все поля формы:</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <label>Название</label>
+            {{ form.title_post }}<br><br>
+            <label>Содержание</label>
+            {{ form.text_post }}<br><br>
+            <label title="Выберите одну или несколько категорий">Категория</label>
+            {{ form.category }}<br><br>
+            <input type="submit" value="Добавить материал на сайт" class="cta-btn-hover"><br><br>
+        </form>
+    </div>
+</div>
+{% endblock content %}
